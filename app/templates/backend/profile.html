@@ -1,0 +1,84 @@
+{% extends 'backend/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-lg p-4">
+        <div class="d-flex align-items-center mb-4">
+          {% if user.profile_image %}
+            <img src="{{ user.profile_image.url }}" class="rounded-circle me-3" style="width: 100px; height: 100px; object-fit: cover;">
+          {% else %}
+            <img src="{% static 'images/default-profile.png' %}" class="rounded-circle me-3" style="width: 100px; height: 100px; object-fit: cover;">
+          {% endif %}
+          <div>
+            <h3 class="mb-0">{{ user.fullname|default:user.username }}</h3>
+            <small class="text-muted">{{ user.title|default:"No title added" }}</small>
+          </div>
+        </div>
+
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th scope="row">Username</th>
+              <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Email</th>
+              <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Phone</th>
+              <td>{{ user.phone|default:"N/A" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Date of Birth</th>
+              <td>{{ user.date_of_birth|date:"F d, Y"|default:"N/A" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Location</th>
+              <td>{{ user.location|default:"N/A" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Bio</th>
+              <td>{{ user.bio|default:"No bio added yet" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">About</th>
+              <td>{{ user.about_description|default:"No detailed description added yet" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Resume</th>
+              <td>
+                {% if user.resume_file %}
+                  <a href="{{ user.resume_file.url }}" class="btn btn-sm btn-outline-primary" target="_blank">View Resume</a>
+                {% else %}
+                  <span class="text-muted">No resume uploaded</span>
+                {% endif %}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Social Links</th>
+              <td>
+                {% if user.linkedin_url %}<a href="{{ user.linkedin_url }}" target="_blank" class="me-2">LinkedIn</a>{% endif %}
+                {% if user.github_url %}<a href="{{ user.github_url }}" target="_blank" class="me-2">GitHub</a>{% endif %}
+                {% if user.twitter_url %}<a href="{{ user.twitter_url }}" target="_blank" class="me-2">Twitter</a>{% endif %}
+                {% if user.instagram_url %}<a href="{{ user.instagram_url }}" target="_blank">Instagram</a>{% endif %}
+                {% if not user.linkedin_url and not user.github_url and not user.twitter_url and not user.instagram_url %}
+                  <span class="text-muted">No social links added</span>
+                {% endif %}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between">
+          <a href="{% url 'editprofile' %}" class="btn btn-primary">Edit Profile</a>
+          <a href="" class="btn btn-warning">Forgot Password?</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

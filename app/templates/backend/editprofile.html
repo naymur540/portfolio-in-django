@@ -1,0 +1,12 @@
+{% extends 'backend/base.html' %}
+
+{% block content %}
+<div class="container" style="margin-top: 50px; max-width: 600px;">
+  <h2>Edit Profile</h2>
+  <form method="POST" enctype="multipart/form-data" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+{% endblock %}
